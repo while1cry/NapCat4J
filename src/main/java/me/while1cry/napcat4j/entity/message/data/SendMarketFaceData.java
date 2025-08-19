@@ -15,8 +15,10 @@ public class SendMarketFaceData extends MessageData {
 
     @Nullable
     public String name;
+
     @Nullable
     public String summary;
+
     @NotNull
     public String file = "marketface";
 }

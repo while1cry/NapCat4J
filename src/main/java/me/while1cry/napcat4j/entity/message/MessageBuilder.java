@@ -85,14 +85,14 @@ public class MessageBuilder {
                     String beforeText = parts[0];
                     String afterText = parts[1];
                     messages.remove(i);
-                    if (! afterText.isEmpty()) {
+                    if (!afterText.isEmpty()) {
                         messages.add(i, new Message("text", new TextData(afterText)));
-                        i ++;
+                        i++;
                     }
                     messages.add(i, replacement);
-                    if (! beforeText.isEmpty()) {
+                    if (!beforeText.isEmpty()) {
                         messages.add(i, new Message("text", new TextData(beforeText)));
-                        i ++;
+                        i++;
                     }
                 }
             }

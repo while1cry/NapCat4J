@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReplyData extends MessageData {
-
     @NotNull
     public String id;
 }

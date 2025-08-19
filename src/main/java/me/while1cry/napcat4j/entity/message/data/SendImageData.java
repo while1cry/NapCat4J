@@ -1,5 +1,6 @@
 package me.while1cry.napcat4j.entity.message.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class SendImageData extends MessageData {
     @NotNull
     public String file;
     @Nullable
-    public String sub_type;
+    @JsonProperty("sub_type")
+    public String subType;
 }
