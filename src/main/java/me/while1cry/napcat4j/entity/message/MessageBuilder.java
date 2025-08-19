@@ -13,6 +13,10 @@ public class MessageBuilder {
 
     }
 
+    public static MessageBuilder builder() {
+        return new MessageBuilder();
+    }
+
     public MessageBuilder text(String text) {
         messages.add(new Message("text", new TextData(text)));
         return this;
@@ -62,9 +66,5 @@ public class MessageBuilder {
 
     public MessageArray build() {
         return new MessageArray(messages.toArray(new Message[0]));
-    }
-
-    public static MessageBuilder builder() {
-        return new MessageBuilder();
     }
 }

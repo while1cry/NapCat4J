@@ -6,11 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import me.while1cry.napcat4j.Bot;
-import me.while1cry.napcat4j.entity.user.LoginInfo;
 import me.while1cry.napcat4j.entity.group.GroupInfo;
 import me.while1cry.napcat4j.entity.group.GroupMemberInfo;
 import me.while1cry.napcat4j.entity.message.MessageArray;
 import me.while1cry.napcat4j.entity.user.Friend;
+import me.while1cry.napcat4j.entity.user.LoginInfo;
 import me.while1cry.napcat4j.entity.user.OnlineStatus;
 import me.while1cry.napcat4j.entity.user.Stranger;
 import me.while1cry.napcat4j.event.EventCaller;
@@ -304,7 +304,8 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
                         .put("no_cache", noCache),
                 resp -> {
                     try {
-                        return mapper.treeToValue(resp.get("data"), new TypeReference<>() {});
+                        return mapper.treeToValue(resp.get("data"), new TypeReference<>() {
+                        });
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
@@ -346,7 +347,8 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
                         .put("group_id", groupId),
                 resp -> {
                     try {
-                        return mapper.treeToValue(resp.get("data"), new TypeReference<>() {});
+                        return mapper.treeToValue(resp.get("data"), new TypeReference<>() {
+                        });
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }

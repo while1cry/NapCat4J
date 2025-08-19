@@ -7,5 +7,6 @@ import java.util.concurrent.CompletableFuture;
 public interface NapCatAPI {
 
     CompletableFuture<Boolean> setGroupSign(String groupId);
+
     CompletableFuture<Boolean> setOnlineStatus(OnlineStatus status);
 }

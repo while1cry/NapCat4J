@@ -13,10 +13,12 @@ public class DefaultSubscriber {
     private final Logger logger;
 
     @Subscribe
-    public void onGroupMessage(GroupMessageEvent ignore) {}
+    public void onGroupMessage(GroupMessageEvent ignore) {
+    }
 
     @Subscribe
-    public void onPrivateMessage(PrivateMessageEvent ignore) {}
+    public void onPrivateMessage(PrivateMessageEvent ignore) {
+    }
 
     @Subscribe
     public void onSubscriberException(SubscriberExceptionEvent event) {
