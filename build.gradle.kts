@@ -22,7 +22,7 @@ dependencies {
     api("org.greenrobot:eventbus-java:3.3.1")
     api("org.slf4j:slf4j-api:2.0.17")
     api("com.fasterxml.jackson.core:jackson-databind:2.19.2")
-    implementation("org.java-websocket:Java-WebSocket:1.6.0")
+    api("org.java-websocket:Java-WebSocket:1.6.0")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
