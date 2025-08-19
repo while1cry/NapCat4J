@@ -44,13 +44,15 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
     private final long TIMEOUT;
     private final ConcurrentHashMap<UUID, CompletableFuture<ObjectNode>> pending = new ConcurrentHashMap<>();
     @Getter
-    private final EventManager eventManager = new EventManager();
+    private final EventManager eventManager;
 
     public BotWebSocketClient(String address, @Nullable String token) throws URISyntaxException {
         super(new URI(address));
         this.token = token;
         this.logger = LoggerFactory.getLogger("NapCat4J");
         this.TIMEOUT = 5000;
+
+        this.eventManager = new EventManager(logger);
     }
 
     public BotWebSocketClient(Logger logger, String address, @Nullable String token, long timeout) throws URISyntaxException {
@@ -58,6 +60,8 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
         this.token = token;
         this.logger = logger;
         this.TIMEOUT = timeout;
+
+        this.eventManager = new EventManager(logger);
     }
 
     @Override

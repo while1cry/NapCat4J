@@ -1,6 +1,5 @@
 package me.while1cry.napcat4j.entity.message;
 
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
@@ -18,7 +17,7 @@ public class MessageDeserializer extends JsonDeserializer<Message> {
     private static final Logger logger = LoggerFactory.getLogger("NapCat4J");
 
     @Override
-    public Message deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
+    public Message deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         ObjectMapper mapper = (ObjectMapper) p.getCodec();
         ObjectNode node = mapper.readTree(p);
 

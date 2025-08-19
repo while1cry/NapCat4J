@@ -2,6 +2,7 @@ package me.while1cry.napcat4j.event;
 
 import me.while1cry.napcat4j.subscriber.DefaultSubscriber;
 import org.greenrobot.eventbus.EventBus;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +12,8 @@ public class EventManager {
     private final EventBus eventBus = new EventBus();
     private final List<Object> listeners = new ArrayList<>();
 
-    public EventManager() {
-        eventBus.register(new DefaultSubscriber());
+    public EventManager(Logger logger) {
+        eventBus.register(new DefaultSubscriber(logger));
     }
 
     public void registerListener(Object listener) {
