@@ -1,5 +1,5 @@
 plugins {
-    id("java")
+    id("java-library")
     id("com.gradleup.shadow") version "9.0.2"
 }
 
@@ -18,9 +18,9 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.38")
     annotationProcessor("org.projectlombok:lombok:1.18.38")
 
-    implementation("org.jetbrains:annotations:26.0.2")
-    implementation("org.greenrobot:eventbus-java:3.3.1")
-    implementation("org.slf4j:slf4j-api:2.0.17")
+    api("org.jetbrains:annotations:26.0.2")
+    api("org.greenrobot:eventbus-java:3.3.1")
+    api("org.slf4j:slf4j-api:2.0.17")
     implementation("org.java-websocket:Java-WebSocket:1.6.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
 
