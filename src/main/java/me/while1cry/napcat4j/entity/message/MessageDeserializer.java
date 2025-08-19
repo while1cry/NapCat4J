@@ -7,14 +7,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import me.while1cry.napcat4j.entity.message.data.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class MessageDeserializer extends JsonDeserializer<Message> {
-
-    private static final Logger logger = LoggerFactory.getLogger("NapCat4J");
 
     @Override
     public Message deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
@@ -43,7 +39,6 @@ public class MessageDeserializer extends JsonDeserializer<Message> {
             case "reply" -> data = new ReplyData(dataNode.path("id").asText());
             case "json" -> data = new JsonData(dataNode.path("data").asText());
             default -> {
-                logger.warn("The message type is not currently supported and an UnparseableData has been returned: {}", type);
                 data = new UnparseableData(dataNode);
             }
         }
