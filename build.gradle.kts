@@ -3,7 +3,7 @@ plugins {
     id("com.gradleup.shadow") version "9.0.2"
 }
 
-group = "net.kamiland"
+group = "me.while1cry"
 version = "0.1.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
