@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import me.while1cry.napcat4j.Bot;
-import me.while1cry.napcat4j.entity.group.GroupInfo;
-import me.while1cry.napcat4j.entity.group.GroupMemberInfo;
+import me.while1cry.napcat4j.entity.group.Group;
+import me.while1cry.napcat4j.entity.group.GroupMember;
 import me.while1cry.napcat4j.entity.message.MessageArray;
 import me.while1cry.napcat4j.entity.user.Friend;
 import me.while1cry.napcat4j.entity.user.LoginInfo;
@@ -314,7 +314,7 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
     }
 
     @Override
-    public CompletableFuture<GroupInfo> getGroupInfo(String groupId) {
+    public CompletableFuture<Group> getGroupInfo(String groupId) {
         final String action = "get_group_info";
 
         return send(action,
@@ -322,7 +322,7 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
                         .put("group_id", groupId),
                 resp -> {
                     try {
-                        return mapper.treeToValue(resp.get("data"), GroupInfo.class);
+                        return mapper.treeToValue(resp.get("data"), Group.class);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
@@ -330,17 +330,17 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
     }
 
     @Override
-    public CompletableFuture<Set<GroupInfo>> getGroupList() {
+    public CompletableFuture<Set<Group>> getGroupList() {
         return null;
     }
 
     @Override
-    public CompletableFuture<GroupMemberInfo> getGroupMemberInfo(String groupId, String userId) {
+    public CompletableFuture<GroupMember> getGroupMemberInfo(String groupId, String userId) {
         return null;
     }
 
     @Override
-    public CompletableFuture<Set<GroupMemberInfo>> getGroupMemberList(String groupId) {
+    public CompletableFuture<Set<GroupMember>> getGroupMemberList(String groupId) {
         final String action = "get_group_member_list";
 
         return send(action,

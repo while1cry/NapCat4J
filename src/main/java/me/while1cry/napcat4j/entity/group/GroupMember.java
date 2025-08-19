@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GroupMemberInfo {
+public class GroupMember {
 
     @JsonProperty("group_id")
     private String groupId;
