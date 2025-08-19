@@ -56,7 +56,7 @@ public class MessageBuilder {
         image.setName(name);
         image.setSummary(summary);
         image.setFile(url);
-        image.setSub_type(subType);
+        image.setSubType(subType);
         messages.add(new Message("image", image));
         return this;
     }

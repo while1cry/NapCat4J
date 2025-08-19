@@ -5,7 +5,7 @@ import me.while1cry.napcat4j.entity.group.GroupMemberInfo;
 import me.while1cry.napcat4j.entity.message.MessageArray;
 import me.while1cry.napcat4j.entity.user.Friend;
 import me.while1cry.napcat4j.entity.user.LoginInfo;
-import me.while1cry.napcat4j.entity.user.Stranger;
+import me.while1cry.napcat4j.entity.user.User;
 
 import java.time.Duration;
 import java.util.Set;
@@ -39,7 +39,7 @@ public interface OneBotAPI {
 
     CompletableFuture<LoginInfo> getLoginInfo();
 
-    CompletableFuture<Stranger> getStrangerInfo(String userId);
+    CompletableFuture<User> getStrangerInfo(String userId);
 
     CompletableFuture<Set<Friend>> getFriendList(boolean noCache);
 

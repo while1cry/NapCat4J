@@ -12,7 +12,7 @@ import me.while1cry.napcat4j.entity.message.MessageArray;
 import me.while1cry.napcat4j.entity.user.Friend;
 import me.while1cry.napcat4j.entity.user.LoginInfo;
 import me.while1cry.napcat4j.entity.user.OnlineStatus;
-import me.while1cry.napcat4j.entity.user.Stranger;
+import me.while1cry.napcat4j.entity.user.User;
 import me.while1cry.napcat4j.event.EventCaller;
 import me.while1cry.napcat4j.event.EventManager;
 import me.while1cry.napcat4j.event.message.GroupMessageEvent;
@@ -281,7 +281,7 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
     }
 
     @Override
-    public CompletableFuture<Stranger> getStrangerInfo(String userId) {
+    public CompletableFuture<User> getStrangerInfo(String userId) {
         final String action = "get_stranger_info";
 
         return send(action,
@@ -289,7 +289,7 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
                         .put("user_id", userId),
                 resp -> {
                     try {
-                        return mapper.treeToValue(resp.get("data"), Stranger.class);
+                        return mapper.treeToValue(resp.get("data"), User.class);
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException(e);
                     }
