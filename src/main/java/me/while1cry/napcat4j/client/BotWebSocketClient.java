@@ -66,7 +66,8 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
 
     @Override
     public void createConnection() {
-        addHeader("Authorization", "Bearer " + token);
+        if (token != null)
+            addHeader("Authorization", "Bearer " + token);
         logger.info("Connecting to {}...", getURI());
         try {
             connectBlocking();
