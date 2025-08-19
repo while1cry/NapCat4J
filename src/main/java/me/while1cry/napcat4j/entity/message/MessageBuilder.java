@@ -4,6 +4,7 @@ import me.while1cry.napcat4j.entity.message.data.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MessageBuilder {
 
@@ -15,6 +16,12 @@ public class MessageBuilder {
 
     public static MessageBuilder builder() {
         return new MessageBuilder();
+    }
+
+    public static MessageBuilder builder(List<Message> messages) {
+        MessageBuilder builder = new MessageBuilder();
+        builder.messages.addAll(messages);
+        return builder;
     }
 
     public MessageBuilder text(String text) {
@@ -61,6 +68,40 @@ public class MessageBuilder {
 
     public MessageBuilder newline() {
         messages.add(new Message("text", new TextData("\n")));
+        return this;
+    }
+
+    public MessageBuilder replace(String placeholder, Message replacement) {
+        for (int i = 0; i < messages.size(); i++) {
+            Message message = messages.get(i);
+            if ("text".equals(message.getType()) && message.getData() instanceof TextData textData) {
+                String text = textData.getText();
+                String quotedPlaceholder = Pattern.quote(placeholder);
+                if (text.equals(placeholder)) {
+                    messages.set(i, replacement);
+                } else if (text.contains(placeholder)) {
+                    String[] parts = text.split(quotedPlaceholder, 2);
+                    if (parts.length < 2) continue;
+                    String beforeText = parts[0];
+                    String afterText = parts[1];
+                    messages.remove(i);
+                    if (! afterText.isEmpty()) {
+                        messages.add(i, new Message("text", new TextData(afterText)));
+                        i ++;
+                    }
+                    messages.add(i, replacement);
+                    if (! beforeText.isEmpty()) {
+                        messages.add(i, new Message("text", new TextData(beforeText)));
+                        i ++;
+                    }
+                }
+            }
+        }
+        return this;
+    }
+
+    public MessageBuilder append(Message message) {
+        messages.add(message);
         return this;
     }
 
