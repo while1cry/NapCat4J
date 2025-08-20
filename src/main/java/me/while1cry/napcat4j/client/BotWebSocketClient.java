@@ -69,12 +69,7 @@ public class BotWebSocketClient extends WebSocketClient implements Bot, EventCal
         if (token != null)
             addHeader("Authorization", "Bearer " + token);
         logger.info("Connecting to {}...", getURI());
-        try {
-            connectBlocking();
-            logger.info("Connected to {}", getURI());
-        } catch (InterruptedException e) {
-            logger.error("Error connecting to {}", getURI(), e);
-        }
+        connect();
     }
 
     @Override
