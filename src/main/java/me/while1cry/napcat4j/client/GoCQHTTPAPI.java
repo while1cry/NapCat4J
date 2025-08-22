@@ -1,4 +1,4 @@
-package me.while1cry.napcat4j;
+package me.while1cry.napcat4j.client;
 
 import java.util.concurrent.CompletableFuture;
 

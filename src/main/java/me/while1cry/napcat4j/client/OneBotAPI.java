@@ -1,11 +1,11 @@
-package me.while1cry.napcat4j;
+package me.while1cry.napcat4j.client;
 
-import me.while1cry.napcat4j.entity.group.Group;
-import me.while1cry.napcat4j.entity.group.GroupMember;
-import me.while1cry.napcat4j.entity.message.MessageArray;
-import me.while1cry.napcat4j.entity.user.Friend;
+import me.while1cry.napcat4j.dto.group.GroupDto;
+import me.while1cry.napcat4j.dto.group.GroupMemberDto;
+import me.while1cry.napcat4j.dto.user.FriendDto;
+import me.while1cry.napcat4j.dto.user.UserDto;
+import me.while1cry.napcat4j.entity.message.Message;
 import me.while1cry.napcat4j.entity.user.LoginInfo;
-import me.while1cry.napcat4j.entity.user.User;
 
 import java.time.Duration;
 import java.util.Set;
@@ -13,13 +13,13 @@ import java.util.concurrent.CompletableFuture;
 
 public interface OneBotAPI {
 
-    CompletableFuture<String> sendPrivateMessage(String userId, MessageArray messageArray);
+    CompletableFuture<String> sendPrivateMessage(String userId, Message message);
 
-    CompletableFuture<String> sendGroupMessage(String groupId, MessageArray messageArray);
+    CompletableFuture<String> sendGroupMessage(String groupId, Message message);
 
     CompletableFuture<Boolean> recallMessage(String messageId);
 
-    CompletableFuture<MessageArray> getMessage(String messageId);
+    CompletableFuture<Message> getMessage(String messageId);
 
     CompletableFuture<Boolean> sendLike(String userId, int times);
 
@@ -39,17 +39,17 @@ public interface OneBotAPI {
 
     CompletableFuture<LoginInfo> getLoginInfo();
 
-    CompletableFuture<User> getStrangerInfo(String userId);
+    CompletableFuture<UserDto> getStrangerInfo(String userId);
 
-    CompletableFuture<Set<Friend>> getFriendList(boolean noCache);
+    CompletableFuture<Set<FriendDto>> getFriendList(boolean noCache);
 
-    CompletableFuture<Group> getGroupInfo(String groupId);
+    CompletableFuture<GroupDto> getGroupInfo(String groupId);
 
-    CompletableFuture<Set<Group>> getGroupList();
+    CompletableFuture<Set<GroupDto>> getGroupList();
 
-    CompletableFuture<GroupMember> getGroupMemberInfo(String groupId, String userId);
+    CompletableFuture<GroupMemberDto> getGroupMemberInfo(String groupId, String userId);
 
-    CompletableFuture<Set<GroupMember>> getGroupMemberList(String groupId);
+    CompletableFuture<Set<GroupMemberDto>> getGroupMemberList(String groupId);
 
     CompletableFuture<Boolean> cleanCache();
 }

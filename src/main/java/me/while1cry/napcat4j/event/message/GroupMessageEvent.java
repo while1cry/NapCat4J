@@ -1,7 +1,7 @@
 package me.while1cry.napcat4j.event.message;
 
 import lombok.Getter;
-import me.while1cry.napcat4j.entity.message.MessageArray;
+import me.while1cry.napcat4j.entity.message.Message;
 
 @Getter
 public class GroupMessageEvent extends MessageEvent {
@@ -9,7 +9,7 @@ public class GroupMessageEvent extends MessageEvent {
     private final String groupId;
     private final String userId;
 
-    public GroupMessageEvent(String groupId, String userId, String messageId, String rawMessage, MessageArray message) {
+    public GroupMessageEvent(String groupId, String userId, String messageId, String rawMessage, Message message) {
         super("message.group", message, rawMessage, messageId);
         this.groupId = groupId;
         this.userId = userId;

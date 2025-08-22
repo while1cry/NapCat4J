@@ -1,6 +1,6 @@
-package me.while1cry.napcat4j;
+package me.while1cry.napcat4j.client;
 
-import me.while1cry.napcat4j.entity.user.OnlineStatus;
+import me.while1cry.napcat4j.entity.status.OnlineStatus;
 
 import java.util.concurrent.CompletableFuture;
 
