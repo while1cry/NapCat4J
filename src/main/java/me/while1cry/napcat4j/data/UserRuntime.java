@@ -10,14 +10,19 @@ import java.util.concurrent.CompletableFuture;
 public interface UserRuntime extends Closeable {
 
     void load(String userId);
+
     void put(User user);
+
     void remove(String userId);
+
     void removeAll();
 
     @Nullable User getUser(String userId);
+
     CompletableFuture<User> getOrLoadUser(String userId);
 
     Duration getExpiration();
+
     void setExpiration(Duration expiration);
 
     @Override

@@ -1,6 +1,9 @@
 package me.while1cry.napcat4j.entity.message;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.*;
@@ -34,19 +37,6 @@ public class Message {
 
     private Message(List<MessageData> dataList) {
         this.dataList = dataList;
-    }
-
-    @SneakyThrows
-    public String toJson() {
-        ArrayNode arrayNode = mapper.createArrayNode();
-        dataList.forEach(data -> arrayNode.add(data.toJson()));
-        return mapper.writeValueAsString(arrayNode);
-    }
-
-    public String toCQ() {
-        return dataList.stream()
-                .map(MessageData::toCQ)
-                .collect(Collectors.joining(""));
     }
 
     public static Builder builder() {
@@ -138,6 +128,38 @@ public class Message {
             }
         }
         return builder.build();
+    }
+
+    private static String escape(String text, boolean escapeComma) {
+        String s = text
+                .replace("&", "&amp;")
+                .replace("[", "&#91;")
+                .replace("]", "&#93;");
+        if (escapeComma) {
+            s = s.replace(",", "&#44;");
+        }
+        return s;
+    }
+
+    public static String unescape(String text) {
+        return text
+                .replace("&amp;", "&")
+                .replace("&#91;", "[")
+                .replace("&#93;", "]")
+                .replace("&#44;", ",");
+    }
+
+    @SneakyThrows
+    public String toJson() {
+        ArrayNode arrayNode = mapper.createArrayNode();
+        dataList.forEach(data -> arrayNode.add(data.toJson()));
+        return mapper.writeValueAsString(arrayNode);
+    }
+
+    public String toCQ() {
+        return dataList.stream()
+                .map(MessageData::toCQ)
+                .collect(Collectors.joining(""));
     }
 
     public static class Builder {
@@ -427,24 +449,5 @@ public class Message {
             node.set("data", data);
             gen.writeObject(node);
         }
-    }
-
-    private static String escape(String text,  boolean escapeComma) {
-        String s = text
-                .replace("&", "&amp;")
-                .replace("[", "&#91;")
-                .replace("]", "&#93;");
-        if (escapeComma) {
-            s = s.replace(",", "&#44;");
-        }
-        return s;
-    }
-
-    public static String unescape(String text) {
-        return text
-                .replace("&amp;", "&")
-                .replace("&#91;", "[")
-                .replace("&#93;", "]")
-                .replace("&#44;", ",");
     }
 }

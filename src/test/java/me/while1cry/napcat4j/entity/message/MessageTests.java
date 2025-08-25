@@ -1,10 +1,10 @@
 package me.while1cry.napcat4j.entity.message;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 
@@ -33,7 +33,7 @@ class MessageTests {
             Message message = Message.builder()
                     .text("Hello World")
                     .build();
-            
+
             assertNotNull(message);
             assertEquals("[{\"type\":\"text\",\"data\":{\"text\":\"Hello World\"}}]", message.toJson());
             assertEquals("Hello World", message.toCQ());
@@ -47,7 +47,7 @@ class MessageTests {
                     .text(" ")
                     .text("World")
                     .build();
-            
+
             assertNotNull(message);
             assertEquals("[{\"type\":\"text\",\"data\":{\"text\":\"Hello\"}},{\"type\":\"text\",\"data\":{\"text\":\" \"}},{\"type\":\"text\",\"data\":{\"text\":\"World\"}}]",
                     message.toJson());
@@ -60,7 +60,7 @@ class MessageTests {
             Message message = Message.builder()
                     .face("123")
                     .build();
-            
+
             assertNotNull(message);
             assertEquals("[{\"type\":\"face\",\"data\":{\"id\":\"123\"}}]", message.toJson());
             assertEquals("[CQ:face,id=123]", message.toCQ());
@@ -74,7 +74,7 @@ class MessageTests {
                     .face("100")
                     .text("World")
                     .build();
-            
+
             assertNotNull(message);
             assertEquals("Hello[CQ:face,id=100]World", message.toCQ());
         }
@@ -85,7 +85,7 @@ class MessageTests {
             Message message = Message.builder()
                     .text("")
                     .build();
-            
+
             assertNotNull(message);
             assertEquals("[{\"type\":\"text\",\"data\":{\"text\":\"\"}}]", message.toJson());
             assertEquals("", message.toCQ());
@@ -97,7 +97,7 @@ class MessageTests {
             Message message = Message.builder()
                     .text("Hello, [World] & Test")
                     .build();
-            
+
             assertEquals("Hello, &#91;World&#93; &amp; Test", message.toCQ());
         }
 
@@ -107,7 +107,7 @@ class MessageTests {
             Message message = Message.builder()
                     .face("test,123")
                     .build();
-            
+
             assertEquals("[CQ:face,id=test&#44;123]", message.toCQ());
         }
 
@@ -144,7 +144,7 @@ class MessageTests {
             Message message = Message.builder()
                     .text("Test Message")
                     .build();
-            
+
             String json = message.toJson();
             assertEquals("[{\"type\":\"text\",\"data\":{\"text\":\"Test Message\"}}]", json);
         }
@@ -157,7 +157,7 @@ class MessageTests {
                     .face("123")
                     .text("World")
                     .build();
-            
+
             String json = message.toJson();
             assertEquals("[{\"type\":\"text\",\"data\":{\"text\":\"Hello\"}},{\"type\":\"face\",\"data\":{\"id\":\"123\"}},{\"type\":\"text\",\"data\":{\"text\":\"World\"}}]",
                     json.replaceAll("\\s+", ""));
@@ -168,7 +168,7 @@ class MessageTests {
         void testDeserializeFromJsonString() {
             String json = "[{\"type\":\"text\",\"data\":{\"text\":\"Hello World\"}}]";
             Message message = Message.fromJson(json);
-            
+
             assertNotNull(message);
             assertEquals("Hello World", message.toCQ());
         }
@@ -178,7 +178,7 @@ class MessageTests {
         void testDeserializeComplexJson() {
             String json = "[{\"type\":\"text\",\"data\":{\"text\":\"Hello\"}},{\"type\":\"face\",\"data\":{\"id\":\"123\"}},{\"type\":\"text\",\"data\":{\"text\":\"World\"}}]";
             Message message = Message.fromJson(json);
-            
+
             assertNotNull(message);
             assertEquals("Hello[CQ:face,id=123]World", message.toCQ());
         }
@@ -208,7 +208,7 @@ class MessageTests {
         void testHandleEmptyJsonArray() {
             String json = "[]";
             Message message = Message.fromJson(json);
-            
+
             assertNotNull(message);
             assertEquals("", message.toCQ());
         }
@@ -222,7 +222,7 @@ class MessageTests {
         @DisplayName("should parse simple text")
         void testParseSimpleText() {
             Message message = Message.fromCQ("Hello World");
-            
+
             assertNotNull(message);
             assertEquals("Hello World", message.toCQ());
         }
@@ -231,7 +231,7 @@ class MessageTests {
         @DisplayName("should parse face CQ code")
         void testParseFaceCQCode() {
             Message message = Message.fromCQ("[CQ:face,id=123]");
-            
+
             assertNotNull(message);
             assertEquals("[CQ:face,id=123]", message.toCQ());
         }
@@ -240,7 +240,7 @@ class MessageTests {
         @DisplayName("should parse complex CQ string")
         void testParseComplexCQString() {
             Message message = Message.fromCQ("Hello[CQ:face,id=100]World");
-            
+
             assertNotNull(message);
             assertEquals("Hello[CQ:face,id=100]World", message.toCQ());
         }
@@ -249,7 +249,7 @@ class MessageTests {
         @DisplayName("should parse multiple CQ codes")
         void testParseMultipleCQCodes() {
             Message message = Message.fromCQ("Hi[CQ:face,id=1]there[CQ:face,id=2]!");
-            
+
             assertNotNull(message);
             assertEquals("Hi[CQ:face,id=1]there[CQ:face,id=2]!", message.toCQ());
         }
@@ -258,7 +258,7 @@ class MessageTests {
         @DisplayName("should handle text with special characters")
         void testHandleTextWithSpecialCharacters() {
             Message message = Message.fromCQ("Hello, [World] & Test");
-            
+
             assertNotNull(message);
             assertEquals("Hello, &#91;World&#93; &amp; Test", message.toCQ());
         }
@@ -267,7 +267,7 @@ class MessageTests {
         @DisplayName("should handle escaped characters in CQ codes")
         void testHandleEscapedCharactersInCQ() {
             Message message = Message.fromCQ("[CQ:face,id=test&#44;123]");
-            
+
             assertNotNull(message);
             assertEquals("[CQ:face,id=test&#44;123]", message.toCQ());
         }
@@ -276,7 +276,7 @@ class MessageTests {
         @DisplayName("should handle empty CQ string")
         void testHandleEmptyCQString() {
             Message message = Message.fromCQ("");
-            
+
             assertNotNull(message);
             assertEquals("", message.toCQ());
         }
@@ -292,7 +292,7 @@ class MessageTests {
         @DisplayName("should handle unknown CQ codes")
         void testHandleUnknownCQCodes() {
             Message message = Message.fromCQ("Hello[CQ:unknown,type=test]World");
-            
+
             assertNotNull(message);
             assertEquals("HelloWorld", message.toCQ()); // Unknown codes return empty string
         }
@@ -301,7 +301,7 @@ class MessageTests {
         @DisplayName("should handle malformed CQ codes")
         void testHandleMalformedCQCodes() {
             Message message = Message.fromCQ("Hello[CQ:malformedWorld");
-            
+
             assertNotNull(message);
             // Should handle gracefully
         }
@@ -327,7 +327,7 @@ class MessageTests {
             Message message = Message.builder()
                     .text("Hello, [World] & Test")
                     .build();
-            
+
             assertEquals("Hello, &#91;World&#93; &amp; Test", message.toCQ());
         }
 
@@ -337,7 +337,7 @@ class MessageTests {
             Message message = Message.builder()
                     .face("test,123")
                     .build();
-            
+
             assertEquals("[CQ:face,id=test&#44;123]", message.toCQ());
         }
 
@@ -382,10 +382,10 @@ class MessageTests {
                     .face("123")
                     .text("World")
                     .build();
-            
+
             String json = original.toJson();
             Message deserialized = Message.fromJson(json);
-            
+
             assertEquals(original.toCQ(), deserialized.toCQ());
         }
 
@@ -396,7 +396,7 @@ class MessageTests {
             String cqString = "Hello[CQ:face,id=100]World[CQ:face,id=200]!";
             Message message = Message.fromCQ(cqString);
             String regenerated = message.toCQ();
-            
+
             assertEquals("Hello[CQ:face,id=100]World[CQ:face,id=200]!", regenerated);
         }
 
@@ -405,12 +405,12 @@ class MessageTests {
         void testHandleLargeMessages() {
             StringBuilder largeText = new StringBuilder();
             Message.Builder builder = Message.builder();
-            
+
             for (int i = 0; i < 100; i++) {
                 largeText.append("Text").append(i).append(" ");
                 builder.text("Text" + i + " ");
             }
-            
+
             Message message = builder.build();
             assertNotNull(message);
             assertEquals(largeText.toString(), message.toCQ());
@@ -424,7 +424,7 @@ class MessageTests {
                     .text("你好世界 🌍")
                     .face("微笑")
                     .build();
-            
+
             assertNotNull(message);
             assertEquals("你好世界 🌍[CQ:face,id=微笑]", message.toCQ());
         }

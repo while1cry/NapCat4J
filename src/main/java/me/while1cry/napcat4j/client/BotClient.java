@@ -260,7 +260,7 @@ public abstract class BotClient implements OneBotAPI, GoCQHTTPAPI, NapCatAPI, Cl
                     try {
                         return mapper.treeToValue(rsp.get("data"), GroupMemberDto.class);
                     } catch (JsonProcessingException e) {
-                        throw  new RuntimeException(e);
+                        throw new RuntimeException(e);
                     }
                 });
     }

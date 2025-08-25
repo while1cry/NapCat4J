@@ -48,17 +48,14 @@ public class OnlineStatus {
     public static final OnlineStatus SLEEPING = new OnlineStatus(10, 1016, 0);
     public static final OnlineStatus STAYING_UP = new OnlineStatus(10, 1032, 0);
     public static final OnlineStatus WATCHING_DRAMA = new OnlineStatus(10, 1021, 0);
+    @JsonProperty("status")
+    private final int status;
+    @JsonProperty("ext_status")
+    private final int extStatus;
+    @JsonProperty("battery_status")
+    private final int batteryStatus;
 
     public static OnlineStatus MY_BATTERY(int batteryStatus) {
         return new OnlineStatus(10, 1000, batteryStatus);
     }
-
-    @JsonProperty("status")
-    private final int status;
-
-    @JsonProperty("ext_status")
-    private final int extStatus;
-
-    @JsonProperty("battery_status")
-    private final int batteryStatus;
 }

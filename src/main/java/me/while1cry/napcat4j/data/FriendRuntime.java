@@ -10,15 +10,21 @@ import java.util.concurrent.CompletableFuture;
 public interface FriendRuntime extends Closeable {
 
     void loadAll();
+
     void load(String userId);
+
     void put(Friend friend);
+
     void remove(String userId);
+
     void removeAll();
 
     @Nullable Friend getFriend(String userId);
+
     CompletableFuture<Friend> getOrLoadFriend(String userId);
 
     Duration getExpiration();
+
     void setExpiration(Duration expiration);
 
     @Override
