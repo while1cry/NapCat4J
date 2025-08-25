@@ -49,9 +49,9 @@ public interface OneBotAPI {
 
     CompletableFuture<Set<GroupOverviewDto>> getGroupList(boolean noCache);
 
-    CompletableFuture<GroupMemberDto> getGroupMemberInfo(String groupId, String userId);
+    CompletableFuture<GroupMemberDto> getGroupMemberInfo(String groupId, String userId, boolean noCache);
 
-    CompletableFuture<Set<GroupMemberDto>> getGroupMemberList(String groupId);
+    CompletableFuture<Set<GroupMemberDto>> getGroupMemberList(String groupId, boolean noCache);
 
     CompletableFuture<Boolean> cleanCache();
 }
