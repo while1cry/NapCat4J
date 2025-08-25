@@ -1,5 +1,6 @@
 package me.while1cry.napcat4j.client;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -8,6 +9,7 @@ import lombok.SneakyThrows;
 import me.while1cry.napcat4j.NapCat4J;
 import me.while1cry.napcat4j.dto.group.GroupDto;
 import me.while1cry.napcat4j.dto.group.GroupMemberDto;
+import me.while1cry.napcat4j.dto.group.GroupOverviewDto;
 import me.while1cry.napcat4j.dto.user.FriendDto;
 import me.while1cry.napcat4j.dto.user.UserDto;
 import me.while1cry.napcat4j.entity.message.Message;
@@ -24,6 +26,8 @@ import org.slf4j.Logger;
 import java.io.Closeable;
 import java.net.URI;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
@@ -182,37 +186,99 @@ public abstract class BotClient implements OneBotAPI, GoCQHTTPAPI, NapCatAPI, Cl
     @Override
     public CompletableFuture<LoginInfo> getLoginInfo() {
         return send("get_login_info", mapper.createObjectNode())
-                .thenApply(rsp -> new LoginInfo(rsp.get("data").get("user_id").asText(), rsp.get("data").get("nickname").asText()));
+                .thenApply(rsp -> {
+                    try {
+                        return mapper.treeToValue(rsp.get("data"), LoginInfo.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
     public CompletableFuture<UserDto> getStrangerInfo(String userId) {
-        return null;
+        ObjectNode params = mapper.createObjectNode().put("user_id", userId);
+        return send("get_stranger_info", params)
+                .thenApply(rsp -> {
+                    try {
+                        return mapper.treeToValue(rsp.get("data"), UserDto.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
     public CompletableFuture<Set<FriendDto>> getFriendList(boolean noCache) {
-        return null;
+        ObjectNode params = mapper.createObjectNode().put("no_cache", noCache);
+        return send("get_friend_list", params)
+                .thenApply(rsp -> {
+                    try {
+                        FriendDto[] array = mapper.treeToValue(rsp.get("data"), FriendDto[].class);
+                        return new HashSet<>(Arrays.asList(array));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
     public CompletableFuture<GroupDto> getGroupInfo(String groupId) {
-        return null;
+        ObjectNode params = mapper.createObjectNode().put("group_id", groupId);
+        return send("get_group_info", params)
+                .thenApply(rsp -> {
+                    try {
+                        return mapper.treeToValue(rsp.get("data"), GroupDto.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
-    public CompletableFuture<Set<GroupDto>> getGroupList() {
-        return null;
+    public CompletableFuture<Set<GroupOverviewDto>> getGroupList(boolean noCache) {
+        ObjectNode params = mapper.createObjectNode().put("no_cache", noCache);
+        return send("get_group_list", params)
+                .thenApply(rsp -> {
+                    try {
+                        GroupOverviewDto[] array = mapper.treeToValue(rsp.get("data"), GroupOverviewDto[].class);
+                        return new HashSet<>(Arrays.asList(array));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
-    public CompletableFuture<GroupMemberDto> getGroupMemberInfo(String groupId, String userId) {
-        return null;
+    public CompletableFuture<GroupMemberDto> getGroupMemberInfo(String groupId, String userId, boolean noCache) {
+        ObjectNode params = mapper.createObjectNode()
+                .put("group_id", groupId)
+                .put("user_id", userId)
+                .put("no_cache", noCache);
+        return send("get_group_member_info", params)
+                .thenApply(rsp -> {
+                    try {
+                        return mapper.treeToValue(rsp.get("data"), GroupMemberDto.class);
+                    } catch (JsonProcessingException e) {
+                        throw  new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
-    public CompletableFuture<Set<GroupMemberDto>> getGroupMemberList(String groupId) {
-        return null;
+    public CompletableFuture<Set<GroupMemberDto>> getGroupMemberList(String groupId, boolean noCache) {
+        ObjectNode params = mapper.createObjectNode()
+                .put("group_id", groupId)
+                .put("no_cache", noCache);
+        return send("get_group_list", params)
+                .thenApply(rsp -> {
+                    try {
+                        GroupMemberDto[] array = mapper.treeToValue(rsp.get("data"), GroupMemberDto[].class);
+                        return new HashSet<>(Arrays.asList(array));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
     @Override
