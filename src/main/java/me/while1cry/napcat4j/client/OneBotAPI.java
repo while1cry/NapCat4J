@@ -2,6 +2,7 @@ package me.while1cry.napcat4j.client;
 
 import me.while1cry.napcat4j.dto.group.GroupDto;
 import me.while1cry.napcat4j.dto.group.GroupMemberDto;
+import me.while1cry.napcat4j.dto.group.GroupOverviewDto;
 import me.while1cry.napcat4j.dto.user.FriendDto;
 import me.while1cry.napcat4j.dto.user.UserDto;
 import me.while1cry.napcat4j.entity.message.Message;
@@ -46,7 +47,7 @@ public interface OneBotAPI {
 
     CompletableFuture<GroupDto> getGroupInfo(String groupId);
 
-    CompletableFuture<Set<GroupDto>> getGroupList();
+    CompletableFuture<Set<GroupOverviewDto>> getGroupList(boolean noCache);
 
     CompletableFuture<GroupMemberDto> getGroupMemberInfo(String groupId, String userId);
 
