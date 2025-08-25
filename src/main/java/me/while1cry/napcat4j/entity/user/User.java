@@ -6,5 +6,5 @@ import java.util.concurrent.CompletableFuture;
 
 public class User {
 
-    public CompletableFuture<String> sendMessage(Message message) {}
+//    public CompletableFuture<String> sendMessage(Message message) {}
 }
