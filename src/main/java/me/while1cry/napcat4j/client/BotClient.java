@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import me.while1cry.napcat4j.NapCat4J;
 import me.while1cry.napcat4j.dto.group.GroupDto;
@@ -31,15 +30,21 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@AllArgsConstructor
 public abstract class BotClient implements OneBotAPI, GoCQHTTPAPI, NapCatAPI, Closeable {
 
     protected static final ObjectMapper mapper = new ObjectMapper();
 
     protected final NapCat4J core;
-    protected final Logger logger = core.getLogger();
-    protected final URI uri = core.getAddress();
-    protected final EventManager eventManager = core.getEventManager();
+    protected final Logger logger;
+    protected final URI uri;
+    protected final EventManager eventManager;
+
+    protected BotClient(NapCat4J core) {
+        this.core = core;
+        this.logger = core.getLogger();
+        this.uri = core.getAddress();
+        this.eventManager = core.getEventManager();
+    }
 
     public abstract void connect();
 
