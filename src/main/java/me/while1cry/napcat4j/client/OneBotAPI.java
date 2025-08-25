@@ -6,6 +6,7 @@ import me.while1cry.napcat4j.dto.user.FriendDto;
 import me.while1cry.napcat4j.dto.user.UserDto;
 import me.while1cry.napcat4j.entity.message.Message;
 import me.while1cry.napcat4j.entity.user.LoginInfo;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.Set;
@@ -29,13 +30,13 @@ public interface OneBotAPI {
 
     CompletableFuture<Boolean> banGroup(String groupId, boolean b);
 
-    CompletableFuture<Boolean> setGroupAdmin(String groupId, String userId, boolean admin);
+    CompletableFuture<Boolean> setGroupAdmin(String groupId, String userId, boolean b);
 
     CompletableFuture<Boolean> leaveGroup(String groupId);
 
     CompletableFuture<Boolean> setFriendAddRequest(String flag, boolean approve, String remark);
 
-    CompletableFuture<Boolean> setGroupAddRequest(String flag, boolean approve, String denyReason);
+    CompletableFuture<Boolean> setGroupAddRequest(String flag, boolean approve, @Nullable String denyReason);
 
     CompletableFuture<LoginInfo> getLoginInfo();
 
