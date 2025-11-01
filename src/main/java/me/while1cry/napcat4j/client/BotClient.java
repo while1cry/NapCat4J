@@ -303,10 +303,10 @@ public abstract class BotClient implements OneBotAPI, GoCQHTTPAPI, NapCatAPI, Cl
                     switch (metaEventType) {
                         case "lifecycle" -> {
                             if (subType != null && subType.equals("connect")) {
-                                eventManager.callEvent(new ConnectMetaEvent(json.get("time").asLong(), json.get("self_id").asText()));
+                                eventManager.post(new ConnectMetaEvent(json.get("time").asLong(), json.get("self_id").asText()));
                             }
                         }
-                        case "heartbeat" -> eventManager.callEvent(new HeartbeatMetaEvent(json.get("time").asLong(),
+                        case "heartbeat" -> eventManager.post(new HeartbeatMetaEvent(json.get("time").asLong(),
                                 json.get("self_id").asText(),
                                 new HeartbeatMetaEvent.Status(
                                         json.get("status").get("online").asBoolean(),
@@ -318,7 +318,7 @@ public abstract class BotClient implements OneBotAPI, GoCQHTTPAPI, NapCatAPI, Cl
                 case "message" -> {
                     Message message = Message.fromJson((ArrayNode) json.get("message"));
                     switch (json.get("message_type").asText()) {
-                        case "group" -> eventManager.callEvent(new GroupMessageEvent(
+                        case "group" -> eventManager.post(new GroupMessageEvent(
                                 json.get("group_id").asText(),
                                 json.get("user_id").asText(),
                                 json.get("message_id").asText(),
@@ -326,7 +326,7 @@ public abstract class BotClient implements OneBotAPI, GoCQHTTPAPI, NapCatAPI, Cl
                                 message
                         ));
                         case "private" -> {
-                            eventManager.callEvent(new PrivateMessageEvent(
+                            eventManager.post(new PrivateMessageEvent(
                                     json.get("sub_type").asText(),
                                     json.get("user_id").asText(),
                                     json.get("message_id").asText(),

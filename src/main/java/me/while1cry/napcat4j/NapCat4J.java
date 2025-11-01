@@ -38,20 +38,7 @@ public class NapCat4J implements Closeable {
         this.timeout = timeout;
         this.botType = botType;
 
-        this.eventManager = new EventManager(logger);
-        this.botClient = switch (botType) {
-            case WEBSOCKET_CLIENT -> new WebSocketBotClient(this);
-        };
-    }
-
-    public NapCat4J(Logger logger, URI address, BotType botType, @Nullable String token, Duration timeout) {
-        this.logger = logger;
-        this.address = address;
-        this.token = token;
-        this.timeout = timeout;
-        this.botType = botType;
-
-        this.eventManager = new EventManager(logger);
+        this.eventManager = new EventManager();
         this.botClient = switch (botType) {
             case WEBSOCKET_CLIENT -> new WebSocketBotClient(this);
         };

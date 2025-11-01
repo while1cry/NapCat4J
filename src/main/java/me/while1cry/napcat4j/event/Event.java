@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public abstract class Event {
+public class Event {
+
     private final String eventName;
 }

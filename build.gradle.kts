@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "me.while1cry"
-version = "0.2.0-SNAPSHOT"
+version = "0.3.0-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_21
 java.targetCompatibility = JavaVersion.VERSION_21
 description = "Java QQ client based on NapCatQQ (Onebot v11, go-cqhttp, NapCat protocols)"
@@ -19,10 +19,10 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:1.18.38")
 
     api("org.jetbrains:annotations:26.0.2")
-    api("org.greenrobot:eventbus-java:3.3.1")
     api("org.slf4j:slf4j-api:2.0.17")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
     implementation("org.java-websocket:Java-WebSocket:1.6.0")
+    implementation("io.projectreactor:reactor-core:3.8.0-M7")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")

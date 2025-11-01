@@ -1,37 +1,67 @@
 package me.while1cry.napcat4j.event;
 
-import me.while1cry.napcat4j.subscriber.DefaultSubscriber;
-import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import reactor.core.publisher.Sinks;
+import reactor.core.scheduler.Schedulers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class EventManager {
+    private final Sinks.Many<Object> sink =
+            Sinks.many().multicast().onBackpressureBuffer();
+    private final Logger logger = LoggerFactory.getLogger("EventManager");
 
-    private final EventBus eventBus = new EventBus();
-    private final List<Object> listeners = new ArrayList<>();
+    private final Map<Class<?>, List<ListenerMethod>> listeners = new ConcurrentHashMap<>();
 
-    public EventManager(Logger logger) {
-        eventBus.register(new DefaultSubscriber(logger));
+    public EventManager() {
+        sink.asFlux()
+                .publishOn(Schedulers.boundedElastic())
+                .subscribe(this::dispatchEvent);
     }
 
-    public void registerListener(Object listener) {
-        eventBus.register(listener);
-        listeners.add(listener);
+    public void register(Object listener) {
+        for (Method method : listener.getClass().getDeclaredMethods()) {
+            if (method.isAnnotationPresent(Subscribe.class) && method.getParameterCount() == 1) {
+                Class<?> eventType = method.getParameterTypes()[0];
+                method.setAccessible(true);
+                listeners
+                        .computeIfAbsent(eventType, k -> new ArrayList<>())
+                        .add(new ListenerMethod(listener, method));
+            }
+        }
     }
 
-    public void unregisterListener(Object listener) {
-        eventBus.unregister(listener);
-        listeners.remove(listener);
+    public void unregister(Object listener) {
+        listeners.values().forEach(list ->
+                list.removeIf(lm -> lm.target.equals(listener)));
     }
 
-    public void unregisterAll() {
-        listeners.forEach(eventBus::unregister);
-        listeners.clear();
+    public void post(Object event) {
+        sink.tryEmitNext(event);
     }
 
-    public void callEvent(Object event) {
-        eventBus.post(event);
+    private void dispatchEvent(Object event) {
+        List<ListenerMethod> list = listeners.get(event.getClass());
+        if (list != null) {
+            for (ListenerMethod lm : list) {
+                try {
+                    lm.method.invoke(lm.target, event);
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+        }
+    }
+
+    private static class ListenerMethod {
+        final Object target;
+        final Method method;
+        ListenerMethod(Object t, Method m) {
+            this.target = t;
+            this.method = m;
+        }
     }
 }
