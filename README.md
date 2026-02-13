@@ -2,6 +2,8 @@
 
 > A High-Level Java Client Framework for NapCatQQ
 
+![napcat4j.png](docs/assets/napcat4j.png)
+
 **NapCat4J** 是一个基于 NapCatQQ 构建的 **高层 Java 客户端框架**。
 它不仅封装协议调用，还提供：
 
@@ -103,8 +105,6 @@ napcat4j
 * OneBot / NapCat 协议封装
 * 底层 API 调用实现
 
-这一层不负责缓存，也不负责高层业务逻辑。
-
 ---
 
 ## `/napcat4j-model`
@@ -119,10 +119,6 @@ napcat4j
 * Member
 * Event
 * Action 请求对象
-
-目标是：
-
-> 将原始 JSON 数据映射为强类型 Java 对象。
 
 ---
 
@@ -200,9 +196,6 @@ Framework
 * 提供插件扩展能力
 * 逐步冻结 API，迈向 1.0
 
-> 暂不接入 Spring。
-> 当架构完全稳定后再考虑 Spring Boot Starter。
-
 ---
 
 # 贡献指南
@@ -225,7 +218,7 @@ Framework
 
 ---
 
-# 致谢 ❤️
+# 致谢
 
 * 感谢 NapCatQQ 提供开放协议实现
 * 感谢 IntelliJ IDEA 提供优秀的开发工具
