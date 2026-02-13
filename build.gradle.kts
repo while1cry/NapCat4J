@@ -1,43 +1,56 @@
 plugins {
     id("java-library")
-    id("com.gradleup.shadow") version "9.0.2"
+    id("com.diffplug.spotless") version "8.2.1"
 }
 
 group = "me.while1cry"
-version = "0.3.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_21
-java.targetCompatibility = JavaVersion.VERSION_21
-description = "Java QQ client based on NapCatQQ (Onebot v11, go-cqhttp, NapCat protocols)"
+version = "0.4.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-    gradlePluginPortal()
+description = "NapCat4J - High-level Java client framework for NapCatQQ"
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+    withSourcesJar()
+    withJavadocJar()
 }
 
-dependencies {
-    compileOnly("org.projectlombok:lombok:1.18.38")
-    annotationProcessor("org.projectlombok:lombok:1.18.38")
-
-    api("org.jetbrains:annotations:26.0.2")
-    api("org.slf4j:slf4j-api:2.0.17")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.19.2")
-    implementation("org.java-websocket:Java-WebSocket:1.6.0")
-    implementation("io.projectreactor:reactor-core:3.8.0-M7")
-
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("ch.qos.logback:logback-classic:1.5.18")
-    testImplementation("io.github.cdimascio:dotenv-java:3.2.0")
+allprojects {
+    repositories {
+        mavenCentral()
+    }
 }
 
-tasks.compileJava {
-    options.encoding = "UTF-8"
-}
+subprojects {
 
-tasks.build {
-    dependsOn(tasks.shadowJar)
-}
+    apply(plugin = "java-library")
+    apply(plugin = "com.diffplug.spotless")
 
-tasks.test {
-    useJUnitPlatform()
+    java {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(17))
+        }
+    }
+
+    spotless {
+        java {
+            target("src/**/*.java")
+
+            googleJavaFormat()
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            endWithNewline()
+        }
+    }
+
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+        options.release.set(17)
+    }
+
+    tasks.test {
+        useJUnitPlatform()
+    }
+
 }
