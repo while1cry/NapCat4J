@@ -1,6 +1,10 @@
 rootProject.name = "napcat4j"
-
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
 
 include(
     "napcat4j-core",

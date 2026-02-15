@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.libs
+
 plugins {
     id("java-library")
     id("com.diffplug.spotless") version "8.2.1"
@@ -14,12 +16,6 @@ java {
     }
     withSourcesJar()
     withJavadocJar()
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-    }
 }
 
 subprojects {

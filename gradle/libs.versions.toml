@@ -1,18 +1,16 @@
 [versions]
-slf4j = "2.0.17"
-jackson = "2.19.2"
-websocket = "1.6.0"
-junit = "5.10.0"
+jackson = "3.0.4"
 lombok = "1.18.42"
-annotations = "26.0.2"
+annotations = "26.0.2-1"
+slf4j = "2.0.17"
+junit = "6.0.2"
+logback = "1.5.29"
+spotless = "8.2.1"
 
 [libraries]
-slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
-jackson-databind = { group = "com.fasterxml.jackson.core", name = "jackson-databind", version.ref = "jackson" }
-websocket = { group = "org.java-websocket", name = "Java-WebSocket", version.ref = "websocket" }
-
-junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
-junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter" }
-
-lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
-annotations = { group = "org.jetbrains", name = "annotations", version.ref = "annotations" }
+jackson-databind = { module = "tools.jackson.core:jackson-databind", version.ref = "jackson" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
