@@ -12,7 +12,7 @@ public final class ReplySegment extends Segment {
     private final String id;
 
     public ReplySegment(@NotNull String id) {
-        super("at");
+        super("reply");
         this.id = id;
     }
 
