@@ -1,6 +1,8 @@
 import org.gradle.kotlin.dsl.libs
 
 dependencies {
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
     api(libs.annotations)
     implementation(libs.jackson.databind)
 
