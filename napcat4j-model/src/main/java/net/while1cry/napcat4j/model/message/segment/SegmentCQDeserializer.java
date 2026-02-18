@@ -58,6 +58,10 @@ public class SegmentCQDeserializer {
                 MessageUtil.unescape(data.get("file_id"), true),
                 MessageUtil.unescape(data.get("file_size"), true),
                 MessageUtil.unescape(data.get("file_unique"), true));
+        case "poke" ->
+            new PokeSegment(
+                MessageUtil.unescape(data.get("type"), true),
+                MessageUtil.unescape(data.get("id"), true));
         default -> new UnknownSegment(type, mapper.valueToTree(data));
       };
     } else {

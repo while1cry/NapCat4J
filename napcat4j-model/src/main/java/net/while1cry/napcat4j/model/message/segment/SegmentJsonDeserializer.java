@@ -64,6 +64,7 @@ public class SegmentJsonDeserializer extends ValueDeserializer<Segment> {
               getStringOrNull(data, "file_id"),
               getStringOrNull(data, "file_size"),
               getStringOrNull(data, "file_unique"));
+      case "poke" -> new PokeSegment(getString(data, "type"), getString(data, "id"));
       default -> new UnknownSegment(type, data);
     };
   }
