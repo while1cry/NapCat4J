@@ -35,8 +35,8 @@
 
 ```java
 public void sendMessage(@NotNull User user, @NotNull String message) {
-    Objects.requireNonNull(user, "user must not be null");
-    Objects.requireNonNull(message, "message must not be null");
+  Objects.requireNonNull(user, "user must not be null");
+  Objects.requireNonNull(message, "message must not be null");
 }
 ```
 
@@ -46,8 +46,10 @@ public void sendMessage(@NotNull User user, @NotNull String message) {
 * 超出范围抛出 `IllegalArgumentException`
 
 ```java
-if (groupId <= 0) {
-    throw new IllegalArgumentException("groupId must be positive");
+if(groupId <=0){
+    throw new
+
+IllegalArgumentException("groupId must be positive");
 }
 ```
 
@@ -56,8 +58,10 @@ if (groupId <= 0) {
 * 对于特定格式字符串（如消息内容、用户名、Token），应验证长度和正则规则
 
 ```java
-if (nickname.length() > 32) {
-    throw new IllegalArgumentException("nickname max length is 32");
+if(nickname.length() >32){
+    throw new
+
+IllegalArgumentException("nickname max length is 32");
 }
 ```
 
@@ -69,8 +73,12 @@ if (nickname.length() > 32) {
 
 ```java
 Objects.requireNonNull(userList, "userList must not be null");
-if (userList.isEmpty()) {
-    throw new IllegalArgumentException("userList must not be empty");
+if(userList.
+
+isEmpty()){
+    throw new
+
+IllegalArgumentException("userList must not be empty");
 }
 ```
 
@@ -85,19 +93,23 @@ package me.while1cry.napcat4j.core.validation;
 
 public final class Validate {
 
-    private Validate() {}
+  private Validate() {
+  }
 
-    public static void notNull(Object obj, String message) {
-        if (obj == null) throw new IllegalArgumentException(message);
-    }
+  public static void notNull(Object obj, String message) {
+    if (obj == null)
+      throw new IllegalArgumentException(message);
+  }
 
-    public static void positive(long value, String message) {
-        if (value <= 0) throw new IllegalArgumentException(message);
-    }
+  public static void positive(long value, String message) {
+    if (value <= 0)
+      throw new IllegalArgumentException(message);
+  }
 
-    public static void notEmpty(String str, String message) {
-        if (str == null || str.isEmpty()) throw new IllegalArgumentException(message);
-    }
+  public static void notEmpty(String str, String message) {
+    if (str == null || str.isEmpty())
+      throw new IllegalArgumentException(message);
+  }
 }
 ```
 
@@ -114,8 +126,10 @@ public final class Validate {
 示例：
 
 ```java
-if (message.length() > 500) {
-    throw new ValidationException("message length exceeds 500 characters");
+if(message.length() >500){
+    throw new
+
+ValidationException("message length exceeds 500 characters");
 }
 ```
 
@@ -127,10 +141,15 @@ if (message.length() > 500) {
 * 与手动校验结合，自动生成文档和错误信息
 
 ```java
-public record Message(
-    @NotNull String content,
-    @NotNull User sender
-) {}
+
+@Getter
+public class Message {
+
+  @NotNull
+  private final String content;
+  @NotNull
+  private final User sender;
+}
 ```
 
 ---
@@ -155,13 +174,13 @@ import me.while1cry.napcat4j.model.user.User;
 
 public class MessageService {
 
-    public void sendMessage(User user, String message) {
-        Validate.notNull(user, "user must not be null");
-        Validate.notEmpty(message, "message must not be empty");
-        Validate.positive(user.id(), "userId must be positive");
+  public void sendMessage(User user, String message) {
+    Validate.notNull(user, "user must not be null");
+    Validate.notEmpty(message, "message must not be empty");
+    Validate.positive(user.id(), "userId must be positive");
 
-        // 执行发送逻辑
-    }
+    // 执行发送逻辑
+  }
 }
 ```
 

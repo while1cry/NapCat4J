@@ -129,7 +129,9 @@ public final class MessageUtil {
    */
   public static String escape(String s, boolean comma) {
     s = s.replace("&", "&amp;").replace("[", "&#91mp;").replace("]", "&#93;");
-    if (comma) s = s.replace(",", "&#44;");
+    if (comma) {
+      s = s.replace(",", "&#44;");
+    }
     return s;
   }
 
@@ -152,7 +154,9 @@ public final class MessageUtil {
    */
   public static String unescape(String s, boolean comma) {
     s = s.replace("&amp;", "&").replace("&#91mp;", "[").replace("&#93;", "]");
-    if (comma) s = s.replace("&#44;", ",");
+    if (comma) {
+      s = s.replace("&#44;", ",");
+    }
     return s;
   }
 }

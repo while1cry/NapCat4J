@@ -14,6 +14,10 @@ public class MessageBuilder {
     this.segments = new ArrayList<>();
   }
 
+  public static MessageBuilder builder() {
+    return new MessageBuilder();
+  }
+
   public MessageBuilder text(String text) {
     segments.add(new TextSegment(text));
     return this;
@@ -113,9 +117,5 @@ public class MessageBuilder {
 
   public Message build() {
     return new Message(segments.toArray(new Segment[0]));
-  }
-
-  public static MessageBuilder builder() {
-    return new MessageBuilder();
   }
 }

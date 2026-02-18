@@ -11,6 +11,18 @@ public class SegmentJsonDeserializer extends ValueDeserializer<Segment> {
 
   private static final JsonMapper mapper = new JsonMapper();
 
+  private static String getStringOrNull(JsonNode parent, String fieldName) {
+    JsonNode field = parent.get(fieldName);
+    return (field != null && !field.isNull() && !field.asString().isEmpty())
+        ? field.asString()
+        : null;
+  }
+
+  private static String getString(JsonNode parent, String fieldName) {
+    JsonNode field = parent.get(fieldName);
+    return field.asString();
+  }
+
   @Override
   public Segment deserialize(JsonParser p, DeserializationContext ctxt) throws JacksonException {
     JsonNode node = mapper.readTree(p.getString());
@@ -67,17 +79,5 @@ public class SegmentJsonDeserializer extends ValueDeserializer<Segment> {
       case "poke" -> new PokeSegment(getString(data, "type"), getString(data, "id"));
       default -> new UnknownSegment(type, data);
     };
-  }
-
-  private static String getStringOrNull(JsonNode parent, String fieldName) {
-    JsonNode field = parent.get(fieldName);
-    return (field != null && !field.isNull() && !field.asString().isEmpty())
-        ? field.asString()
-        : null;
-  }
-
-  private static String getString(JsonNode parent, String fieldName) {
-    JsonNode field = parent.get(fieldName);
-    return field.asString();
   }
 }

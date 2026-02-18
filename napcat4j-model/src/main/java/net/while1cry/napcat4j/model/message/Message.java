@@ -20,18 +20,6 @@ public class Message {
     this.segments = segments;
   }
 
-  public String toJson() {
-    ArrayNode array = mapper.createArrayNode();
-    Arrays.stream(segments).forEach(s -> array.add(mapper.valueToTree(s)));
-    return array.toString();
-  }
-
-  public String toCQ() {
-    StringBuilder sb = new StringBuilder();
-    Arrays.stream(segments).forEach(s -> sb.append(cqSerializer.serialize(s)));
-    return sb.toString();
-  }
-
   public static Message fromJson(String json) {
     ArrayNode array = (ArrayNode) mapper.readTree(json);
     return new Message(
@@ -48,5 +36,17 @@ public class Message {
 
   public static MessageBuilder builder() {
     return new MessageBuilder();
+  }
+
+  public String toJson() {
+    ArrayNode array = mapper.createArrayNode();
+    Arrays.stream(segments).forEach(s -> array.add(mapper.valueToTree(s)));
+    return array.toString();
+  }
+
+  public String toCQ() {
+    StringBuilder sb = new StringBuilder();
+    Arrays.stream(segments).forEach(s -> sb.append(cqSerializer.serialize(s)));
+    return sb.toString();
   }
 }

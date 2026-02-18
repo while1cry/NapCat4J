@@ -33,7 +33,7 @@ NapCat4J 采用 **分层模块化架构**，核心理念：
 +-----------------------------------------------------+
 | napcat4j-model
 |  - 数据模型（User / Group / Message / Event）
-|  - POJO / record 对象
+|  - POJO 对象
 +-----------------------------------------------------+
 ```
 
@@ -121,7 +121,7 @@ NapCatQQ Server
 * **高层 API 简洁**
   业务开发者无需关心 WebSocket / HTTP 细节
 * **强类型**
-  尽量使用 `record` 或不可变对象
+  尽量使用不可变对象
 * **模块边界清晰**
   Framework → Cache → Core → Model
 

@@ -95,18 +95,25 @@ dependencies {
 // model 模块
 package me.while1cry.napcat4j.model.user;
 
-public record User(
-    long id,
-    String nickname
-) {}
+import lombok.Getter;
 
+@Getter
+public class User {
+
+  private final long id;
+  private final String nickname;
+}
+```  
+
+```java
 // core 模块
 package me.while1cry.napcat4j.core.websocket;
 
 import me.while1cry.napcat4j.model.user.User;
 
 public interface WebSocketClient {
-    void send(User user, String message);
+
+  void send(User user, String message);
 }
 ```
 

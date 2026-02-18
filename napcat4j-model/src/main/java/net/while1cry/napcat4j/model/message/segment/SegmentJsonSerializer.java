@@ -20,7 +20,9 @@ public class SegmentJsonSerializer extends ValueSerializer<Segment> {
         .getData()
         .forEach(
             (k, v) -> {
-              if (v != null) map.put(k, v);
+              if (v != null) {
+                map.put(k, v);
+              }
             });
     gen.writeTree(
         mapper
