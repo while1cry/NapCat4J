@@ -4,7 +4,6 @@ import java.util.Map;
 import lombok.Getter;
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.annotation.JsonSerialize;
-import tools.jackson.databind.json.JsonMapper;
 
 @JsonSerialize(using = SegmentJsonSerializer.class)
 @JsonDeserialize(using = SegmentJsonDeserializer.class)
@@ -15,14 +14,13 @@ public abstract sealed class Segment
         FileSegment,
         ImageSegment,
         JsonSegment,
+        PokeSegment,
         RPSSegment,
         RecordSegment,
         ReplySegment,
         TextSegment,
         UnknownSegment,
         VideoSegment {
-
-  protected static final JsonMapper mapper = new JsonMapper();
 
   @Getter protected final String type;
 
